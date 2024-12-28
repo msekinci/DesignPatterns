@@ -1,6 +1,4 @@
-using System;
-
-namespace DesignPatterns.Base.Models
+namespace DesignPatterns.Strategy.Models
 {
     public class ErrorViewModel
     {

@@ -1,6 +1,8 @@
-using DesignPatterns.Base.Models;
+using DesignPatterns.Strategy.Models;
+using DesignPatterns.Strategy.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DesignPatterns.Base
+namespace DesignPatterns.Strategy
 {
     public class Startup
     {
@@ -43,6 +45,28 @@ namespace DesignPatterns.Base
             #endregion
 
             #endregion
+
+            services.AddHttpContextAccessor(); // Runtime'da HTTPContext'e eriþmek için
+
+            services.AddScoped<IProductRepository>(sp =>
+            {
+                var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
+                var claim = httpContextAccessor.HttpContext.User.Claims.Where(x => x.Type == Settings.ClaimDatabaseType).FirstOrDefault();
+
+                var context = sp.GetRequiredService<AppIdentityDbContext>();
+                if (claim == null)
+                {
+                    return new ProductRepositoryFromSqlServer(context);
+                }
+
+                var databaseType = (EDatabaseType)int.Parse(claim.Value);
+                return databaseType switch
+                {
+                    EDatabaseType.SqlServer => new ProductRepositoryFromSqlServer(context),
+                    EDatabaseType.MongoDb => new ProductRepositoryFromMongoDb(Configuration),
+                    _ => throw new NotImplementedException()
+                };
+            });
 
             services.AddControllersWithViews();
         }

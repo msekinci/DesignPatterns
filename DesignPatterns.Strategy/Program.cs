@@ -1,4 +1,4 @@
-using DesignPatterns.Base.Models;
+using DesignPatterns.Strategy.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 
-namespace DesignPatterns.Base
+namespace DesignPatterns.Strategy
 {
     public class Program
     {
