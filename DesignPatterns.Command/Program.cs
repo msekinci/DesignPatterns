@@ -1,12 +1,13 @@
-using DesignPatterns.Base.Models;
+using DesignPatterns.Command.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Linq;
 
-namespace DesignPatterns.Base
+namespace DesignPatterns.Command
 {
     public class Program
     {
@@ -28,6 +29,18 @@ namespace DesignPatterns.Base
                 userManager.CreateAsync(new AppUser { UserName = "user3", Email = "user3@outlook.com" }, "Password12*").Wait();
                 userManager.CreateAsync(new AppUser { UserName = "user4", Email = "user4@outlook.com" }, "Password12*").Wait();
                 userManager.CreateAsync(new AppUser { UserName = "user5", Email = "user5@outlook.com" }, "Password12*").Wait();
+
+                Enumerable.Range(1, 30).ToList().ForEach(x =>
+                {
+                    identityDbContext.Product.Add(new Product() 
+                    { 
+                        Name = $"kalem {x}", 
+                        Price = (decimal)(0.25 * x * new Random().Next(100)), 
+                        Stock = new Random().Next(100) 
+                    });
+                });
+
+                identityDbContext.SaveChangesAsync();
             }
 
             host.Run();

@@ -1,6 +1,6 @@
 using System;
 
-namespace DesignPatterns.Base.Models
+namespace DesignPatterns.Command.Models
 {
     public class ErrorViewModel
     {

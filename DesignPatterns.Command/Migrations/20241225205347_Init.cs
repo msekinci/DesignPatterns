@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DesignPatterns.Base.Migrations
+namespace DesignPatterns.Command.Migrations
 {
     public partial class Init : Migration
     {

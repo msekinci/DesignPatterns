@@ -1,18 +1,15 @@
-using DesignPatterns.Base.Models;
+using DesignPatterns.Command.Models;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace DesignPatterns.Base
+namespace DesignPatterns.Command
 {
     public class Startup
     {
@@ -44,6 +41,7 @@ namespace DesignPatterns.Base
 
             #endregion
 
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
             services.AddControllersWithViews();
         }
 

@@ -1,9 +1,9 @@
-﻿using DesignPatterns.Base.Models;
+﻿using DesignPatterns.Command.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace DesignPatterns.Base.Controllers
+namespace DesignPatterns.Command.Controllers
 {
     public class AccountController : Controller
     {
